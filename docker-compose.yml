@@ -13,12 +13,12 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
-      - proxy-test
+      - sandbox-network
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.traefik.rule=Host(`sandbox.traefik.me`)"
       - "traefik.http.routers.traefik.service=api@internal"
 
 networks:
-  proxy-test:
+  sandbox-network:
     external: true

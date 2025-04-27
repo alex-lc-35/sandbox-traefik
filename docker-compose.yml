@@ -7,6 +7,7 @@ services:
       - --providers.docker=true
       - --providers.docker.exposedbydefault=false
       - --entrypoints.web.address=:${TRAEFIK_HTTP_PORT}
+      - --entrypoints.websecure.address=:8443
     ports:
       - "${TRAEFIK_HTTP_PORT}:${TRAEFIK_HTTP_PORT}"
       - "${TRAEFIK_DASHBOARD_PORT}:${TRAEFIK_DASHBOARD_PORT}"

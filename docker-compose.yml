@@ -1,24 +1,24 @@
 services:
   traefik:
-    image: traefik:v2.11
-    container_name: sandbox-treafik
+    image: ${TRAEFIK_IMAGE}
+    container_name: ${TRAEFIK_CONTAINER_NAME}
     command:
       - --api.dashboard=true
       - --providers.docker=true
       - --providers.docker.exposedbydefault=false
-      - --entrypoints.web.address=:80
+      - --entrypoints.web.address=:${TRAEFIK_HTTP_PORT}
     ports:
-      - "80:80"
-      - "8080:8080"
+      - "${TRAEFIK_HTTP_PORT}:${TRAEFIK_HTTP_PORT}"
+      - "${TRAEFIK_DASHBOARD_PORT}:${TRAEFIK_DASHBOARD_PORT}"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
-      - sandbox-network
+      - ${TRAEFIK_NETWORK}
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik.rule=Host(`sandbox.traefik.me`)"
+      - "traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DASHBOARD_DOMAIN}`)"
       - "traefik.http.routers.traefik.service=api@internal"
 
 networks:
-  sandbox-network:
+  ${TRAEFIK_NETWORK}:
     external: true

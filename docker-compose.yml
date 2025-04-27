@@ -14,12 +14,12 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
-      - ${TRAEFIK_NETWORK}
+      - sandbox-network
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DASHBOARD_DOMAIN}`)"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.rfess.fr`)"
       - "traefik.http.routers.traefik.service=api@internal"
 
 networks:
-  ${TRAEFIK_NETWORK}:
+  sandbox-network:
     external: true

@@ -1,46 +1,25 @@
 services:
   traefik:
-    image: traefik:v2.11
-    container_name: sandbox-traefik
+    image: ${TRAEFIK_IMAGE}
+    container_name: ${TRAEFIK_CONTAINER_NAME}
     command:
       - --api.dashboard=true
       - --providers.docker=true
       - --providers.docker.exposedbydefault=false
-
-      # Entrées HTTP/HTTPS
-      - --entrypoints.web.address=:80
-      - --entrypoints.websecure.address=:443
-
-      # Let's Encrypt (certresolver)
-      - --certificatesresolvers.letsencrypt.acme.httpchallenge=true
-      - --certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web
-      - --certificatesresolvers.letsencrypt.acme.email=ton@email.tld
-      - --certificatesresolvers.letsencrypt.acme.storage=/etc/traefik/acme.json
-
-      # Redirection HTTP → HTTPS
-      - --entrypoints.web.http.redirections.entrypoint.to=websecure
-      - --entrypoints.web.http.redirections.entrypoint.scheme=https
-
+      - --entrypoints.web.address=:${TRAEFIK_HTTP_PORT}
+      - --entrypoints.websecure.address=:8443
     ports:
-      - "80:80"
-      - "443:443"
-      - "8080:8080"
-
+      - "${TRAEFIK_HTTP_PORT}:${TRAEFIK_HTTP_PORT}"
+      - "${TRAEFIK_DASHBOARD_PORT}:${TRAEFIK_DASHBOARD_PORT}"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./acme.json:/etc/traefik/acme.json
-
     networks:
-      - sandbox-network
-
+      - ${TRAEFIK_NETWORK}
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik.rule=Host(`sandbox.traefik.me`)"
+      - "traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DASHBOARD_DOMAIN}`)"
       - "traefik.http.routers.traefik.service=api@internal"
-      - "traefik.http.routers.traefik.entrypoints=websecure"
-      - "traefik.http.routers.traefik.tls=true"
-      - "traefik.http.routers.traefik.tls.certresolver=letsencrypt"
 
 networks:
-  sandbox-network:
+  ${TRAEFIK_NETWORK}:
     external: true

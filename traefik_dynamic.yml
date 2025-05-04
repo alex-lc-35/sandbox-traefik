@@ -1,0 +1,7 @@
+http:
+  middlewares:
+    websocket-headers:
+      headers:
+        customRequestHeaders:
+          Connection: "Upgrade"
+          Upgrade: "websocket"

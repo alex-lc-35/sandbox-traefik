@@ -41,8 +41,8 @@ case "$COMMAND" in
     docker compose -f "$DOCKER_COMPOSE_FILE" restart
     ;;
   logs)
-    echo "📜 Logs du conteneur messages-socket"
-    docker logs -f messages-socket
+    echo "📜 Logs du conteneur sandbox-traefik"
+    docker logs -f sandbox-traefik
     ;;
   *)
     echo "❌ Commande inconnue: $COMMAND"

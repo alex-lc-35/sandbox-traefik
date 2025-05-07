@@ -2,8 +2,8 @@
 
 # Helper multi-commande pour messages-front (global, prod d'abord)
 
-DOCKER_COMPOSE_FILE="_docker/docker-compose.yml"
-DOCKER_COMPOSE_PROD_FILE="_docker/docker-compose.prod.yml"
+DOCKER_COMPOSE_FILE="docker-compose.yml"
+DOCKER_COMPOSE_PROD_FILE="docker-compose.prod.yml"
 
 show_help() {
   echo ""

@@ -62,13 +62,13 @@ case "$ACTION" in
     echo "🔄 Redémarrage ($CONTEXT)"
     docker compose -f "$FILE" restart
     ;;
-  logs-nginx)
-    echo "📜 Logs du conteneur messages-front-nginx"
-    docker logs -f messages-front-nginx
+  logs)
+    echo "📜 Logs du conteneur sandbox-traefik"
+    docker logs -f sandbox-traefik
     ;;
   *)
     echo "❌ Commande inconnue: $COMMAND"
     show_help
-    exit 1
+    exit
     ;;
 esac
